@@ -7,16 +7,17 @@
     <h1>ご協力ありがとうございました</h1>
     
     <?php
-    var_dump($_POST);
+    
+    /*var_dump($_POST);*/
     
     $syumi = $_POST["syumi"];
-    var_dump($syumi);
+    /*var_dump($syumi);*/
 
     unset($_POST["syumi"]);
-    var_dump($_POST);
+    /*var_dump($_POST);*/
     
     $_POST2 = array_merge($_POST,$syumi);
-    var_dump($_POST2);
+    /*var_dump($_POST2);*/
     
     
     $file=fopen("data.txt","w");
@@ -27,6 +28,9 @@
     
     ?>
     
-    
+    <p>
+        <a href="show_end.php">回答の確認</a>
+    </p>
+
 </body>
 </html>

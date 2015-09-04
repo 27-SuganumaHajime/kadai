@@ -14,16 +14,16 @@
         年齢:<input type="text" name="nenrei">才
         <br>
         性別:
-        <input type="radio" name="sei" value="dansei">男性
-        <input type="radio" name="sei" value="jyosei">女性
+        <input type="radio" name="sei" value="男性">男性
+        <input type="radio" name="sei" value="女性">女性
         <br>
         趣味:
         <input type="hidden" name="syumi[0]" value="">
         <input type="hidden" name="syumi[1]" value="">
         <input type="hidden" name="syumi[2]" value="">
-        <input type="checkbox" name="syumi[0]" value="suiei">水泳
-        <input type="checkbox" name="syumi[1]" value="jitensya">自転車
-        <input type="checkbox" name="syumi[2]" value="running">ランニング
+        <input type="checkbox" name="syumi[0]" value="水泳">水泳
+        <input type="checkbox" name="syumi[1]" value="自転車">自転車
+        <input type="checkbox" name="syumi[2]" value="ランニング">ランニング
         <br>
         <input type="submit">
     </form>
