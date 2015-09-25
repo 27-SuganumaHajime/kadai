@@ -22,6 +22,44 @@
             </p>
         </form>
         <h1>検索結果</h1>
+        
+        <?php
+         $para = array();
+         if (!empty($_GET["free_word"])){
+             array_push($para,"free_word=".$_GET["free_word"]);
+         }
+         if (!empty($_GET["category_name"])){
+             foreach($_GET["category_name"] as $cate){
+                 array_push($para,"category_name[]=".$cate);
+             }
+         }
+         $para_new = $para;
+         array_push($para_new,"sort=new");
+         $para_newx = implode("&",$para_new);
+         $para_old = $para;
+         array_push($para_old,"sort=old");
+         $para_oldx = implode("&",$para_old);
+         //var_dump($para_newx);
+        ?>
+        
+        <p>
+         <span>
+          <?php
+          echo
+          "<a href='news_list.php?".$para_newx."'>";
+          ?>
+          [新しい順]
+          </a>
+         </span>
+         <span>
+          <?php
+          echo
+          "<a href='news_list.php?".$para_oldx."'>";
+          ?>
+          [古い順]
+          </a>
+         </span>
+        </p>
         <dl>
         <?php
          $pdo = new PDO("mysql:host=localhost;dbname=cs_academy;charset=utf8", "root", "");
@@ -33,6 +71,16 @@
          if (!empty($_GET["category_name"])){
              $category_name = "'".implode("','",$_GET["category_name"])."'";
              $sql.= " AND category_name in ($category_name)"; 
+         }
+         if (!empty($_GET["sort"])){
+             switch ($_GET["sort"]){
+                 case "new":
+                     $sql.=" ORDER BY create_date desc";
+                     break;
+                 case "old":
+                     $sql.=" ORDER BY create_date";
+                     break;
+             }
          }
          //var_dump($_GET["free_word"]);
          //var_dump($_GET["category_name"]);
