@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="utf-8">
+    <title>Milkcocoaで作ったLINE風チャット</title>
+    <script src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
+    <script src="http://cdn.mlkcca.com/v2.0.0/milkcocoa.js"></script>
+    <script>
+    $(function(){
+        var milkcocoa = new MilkCocoa("teaifc52re5.mlkcca.com");
+        var ds = milkcocoa.dataStore("comment");
+        
+        ds.stream().sort("desc").next(function(err,list){
+            list.forEach(function(data){
+                hyoji(data);
+            });
+        });
+        
+        ds.on("push",function(e){
+            //console.log(e["value"]["name"]);
+            hyoji(e);
+        });
+        
+        var last = "dummy";
+        function hyoji(data){
+            //console.log(data["id"]);
+            //console.log(data["timestamp"]);
+            //console.log(data["value"]["name"]);
+            //console.log(data["value"]["comment"]);
+            var time_string = new Date(data.timestamp).toLocaleString();
+            var time_html = "<p>"+time_string+"</p>";
+            var name_html = "<p>"+data.value.name+"</p>";
+            var comment_html = "<p>"+data.value.comment+"</p>";
+            $("#"+last).before("<div id='"+data.id+"'>"+time_html+name_html+comment_html+"</div>");
+            last = data.id;
+        }
+        
+        $("#entry").click(function(){
+            var nam = $("#name_area").val();
+            var com = $("#comment_area").val();
+            if(nam !=="" && com !==""){
+                ds.push(
+                    {name:nam,comment:com}
+                );
+            $("#name_area").val("");
+            $("#comment_area").val("");
+            }
+        });
+        
+    });
+    </script>
+</head>
+
+<body>
+    <p>
+        <textarea id="name_area" placeholder="名前"></textarea>
+    </p>
+    <p>
+        <textarea id="comment_area" placeholder="コメント" cols="30" rows="10"></textarea>
+    </p>
+    <p>
+        <button id="entry">コメントする</button>
+    </p>
+    <p>
+        <div id="dummy"></div>
+    </p>
+</body>
+</html>
